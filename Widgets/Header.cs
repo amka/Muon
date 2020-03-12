@@ -17,10 +17,7 @@ namespace Muon.Widgets
             StyleContext.AddClass("default-decoration");
 
             OpenButton = new Button("document-open", IconSize.SmallToolbar);
-            SaveButton = new Button("document-save", IconSize.SmallToolbar)
-            {
-                Sensitive = false,
-            };
+            SaveButton = new Button("document-save", IconSize.SmallToolbar);
 
             PackStart(OpenButton);
             PackStart(SaveButton);

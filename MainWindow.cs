@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Gtk;
 using Muon.Widgets;
 
@@ -19,9 +20,13 @@ namespace Muon
             DeleteEvent += Window_DeleteEvent;
 
             Editor = new EditorView(this);
-            Editor.Opened += (sender, args) => {
-                header.SaveButton.Sensitive = true;
-                header.Subtitle = Editor.FilePath.PathAndQuery;
+            Editor.Opened += (sender, args) =>
+            {
+                header.Subtitle = new FileInfo(Editor.FilePath.AbsoluteUri).Name;
+            };
+            Editor.Saved += (sender, args) =>
+            {
+                header.Subtitle = new FileInfo(Editor.FilePath.AbsoluteUri).Name;
             };
 
             header.OpenButton.Clicked += Editor.Open;
