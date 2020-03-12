@@ -16,8 +16,10 @@ namespace Muon.Widgets
             ShowCloseButton = true;
             StyleContext.AddClass("default-decoration");
 
-            OpenButton = new Button("document-open", IconSize.SmallToolbar);
-            SaveButton = new Button("document-save", IconSize.SmallToolbar);
+            OpenButton = new Button("document-open", IconSize.LargeToolbar);
+            OpenButton.TooltipMarkup = "Open document\n<span weight='600' size='smaller' alpha='75%'>Ctrl+O</span>";
+            SaveButton = new Button("document-save", IconSize.LargeToolbar);
+            SaveButton.TooltipMarkup = "Save document as...\n<span weight='600' size='smaller' alpha='75%'>Ctrl+S</span>";
 
             PackStart(OpenButton);
             PackStart(SaveButton);
