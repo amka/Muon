@@ -34,6 +34,44 @@ namespace Muon.Widgets
             };
             View.StyleContext.AddClass("view");
             View.Add(Editor);
+
+            Editor.KeyReleaseEvent += KeyPressReleased;
+        }
+
+        private void KeyPressReleased(object o, KeyReleaseEventArgs args)
+        {
+            Console.WriteLine($"KeyReleased: {args.Event.Key}");
+            if (args.Event.Key == Gdk.Key.Control_L && Editor.Buffer.HasSelection)
+            {
+                var formatPopover = new Popover(Editor);
+                formatPopover.Position = PositionType.Bottom;
+
+                var formatGrid = new Grid();
+                formatGrid.StyleContext.AddClass("linked");
+                formatGrid.Orientation = Orientation.Horizontal;
+                formatGrid.Margin = 8;
+                formatGrid.Add(new Button("format-text-bold-symbolic", IconSize.Menu));
+                formatGrid.Add(new Button("format-text-italic-symbolic", IconSize.Menu));
+                formatGrid.Add(new Button("format-text-underline-symbolic", IconSize.Menu));
+
+                formatPopover.Add(formatGrid);
+                formatPopover.ShowAll();
+
+                TextIter iterStart;
+                TextIter iterEnd;
+                TextBuffer.GetSelectionBounds(out iterStart, out iterEnd);
+                var iterStartLoc = Editor.GetIterLocation(iterStart);
+                var iterEndLoc = Editor.GetIterLocation(iterEnd);
+
+                var selectionSize = (iterEndLoc.X - iterStartLoc.X) / 2;
+
+                int window_x;
+                int window_y;
+                Editor.BufferToWindowCoords(TextWindowType.Widget, iterStartLoc.X, iterStartLoc.Y, out window_x, out window_y);
+
+                formatPopover.PointingTo = new Gdk.Rectangle(window_x + selectionSize, window_y, selectionSize, iterEndLoc.Height);
+                formatPopover.Popup();
+            }
         }
 
         public async void SaveAs(object sender, EventArgs e)
