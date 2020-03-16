@@ -10,7 +10,7 @@ namespace Muon
         {
             Application.Init();
 
-            var app = new Application("com.github.amka.muion", GLib.ApplicationFlags.None);
+            var app = new Application("com.github.amka.muon", GLib.ApplicationFlags.None);
             app.Register(GLib.Cancellable.Current);
 
             var win = new MainWindow(app);
