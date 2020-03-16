@@ -20,19 +20,18 @@ namespace Muon
             DeleteEvent += Window_DeleteEvent;
 
             Editor = new EditorView(this);
-            Editor.Opened += (sender, args) =>
-            {
-                header.Subtitle = new FileInfo(Editor.FilePath.AbsoluteUri).Name;
-            };
-            Editor.Saved += (sender, args) =>
-            {
-                header.Subtitle = new FileInfo(Editor.FilePath.AbsoluteUri).Name;
-            };
+            Editor.Opened += UpdateSubtitle;
+            Editor.Saved += UpdateSubtitle;
 
             header.OpenButton.Clicked += Editor.Open;
-            header.SaveButton.Clicked += Editor.Save;
+            header.SaveButton.Clicked += Editor.SaveAs;
 
             Add(Editor.View);
+        }
+
+        private void UpdateSubtitle(object sender, EventArgs args)
+        {
+            header.Subtitle = Editor.Document.Name;
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)

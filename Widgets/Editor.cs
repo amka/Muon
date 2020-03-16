@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Gtk;
+using Muon.Models;
 
 namespace Muon.Widgets
 {
@@ -9,8 +10,8 @@ namespace Muon.Widgets
         TextBuffer TextBuffer;
         TextView Editor;
         public ScrolledWindow View;
-        public Uri FilePath;
         Window Parent;
+        public Document Document;
 
 
         public event EventHandler Opened;
@@ -35,7 +36,7 @@ namespace Muon.Widgets
             View.Add(Editor);
         }
 
-        public async void Save(object sender, EventArgs e)
+        public async void SaveAs(object sender, EventArgs e)
         {
             var dlg = new FileChooserDialog("Save document", Parent, FileChooserAction.Save, new object[] {
                 "Cancel", ResponseType.Cancel,
@@ -53,7 +54,7 @@ namespace Muon.Widgets
                 try
                 {
                     await File.WriteAllTextAsync(dlg.Filename, TextBuffer.Text);
-                    FilePath = new Uri(dlg.Filename);
+                    Document.FilePath = new Uri(dlg.Filename);
                     Saved(this, null);
                 }
                 catch (System.Exception)
@@ -84,7 +85,10 @@ namespace Muon.Widgets
                     var text = await File.ReadAllTextAsync(dlg.Filename, System.Text.Encoding.UTF8);
                     TextBuffer.Text = text;
 
-                    FilePath = new Uri(dlg.Filename);
+                    Document = new Document()
+                    {
+                        FilePath = new Uri(dlg.Filename),
+                    };
 
                     Opened(this, null);
                 }
