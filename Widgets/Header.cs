@@ -18,12 +18,12 @@ namespace Muon.Widgets
             // StyleContext.AddClass("default-decoration");
 
             OpenButton = new Button("document-open", IconSize.LargeToolbar);
-            OpenButton.TooltipMarkup = "Open document\n<span weight='600' size='smaller' alpha='75%'>Ctrl+O</span>";
+            OpenButton.TooltipMarkup = "Open document";
             SaveButton = new Button("document-save", IconSize.LargeToolbar);
-            SaveButton.TooltipMarkup = "Save document as...\n<span weight='600' size='smaller' alpha='75%'>Ctrl+S</span>";
+            SaveButton.TooltipMarkup = "Save document as...";
 
             PackStart(OpenButton);
-            PackStart(SaveButton);
+            PackEnd(SaveButton);
 
             // Init menu action buttons
             var zoomOutButton = new Button("zoom-out-symbolic", IconSize.Menu)
