@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.github.amka.muon</id> 
+  <name>Muon</name>
+  <summary>Text editor baked for simplicity</summary>
+  <description>
+    This is applications's description. A paragraph or two to tell the
+    most important story about it.
+  </description>
+  <icon type="local">data/muon.png</icon>
+  <launchable type="desktop-id">
+    com.github.amka.muon.desktop
+  </launchable>
+  <releases>
+    <release date="2020-03-31" version="0.1.0"/>
+  </releases>
+</component>

@@ -1,0 +1,35 @@
+name: muon
+version: git
+base: core18
+title: Muon
+icon: data/muon.png
+summary: Text editor baked for simplicity.
+description: |
+  This is my-snap's description. You have a paragraph or two to tell the
+  most important story about your snap. Keep it under 100 words though,
+  we live in tweetspace and your description wants to look good in the snap
+  store.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+apps:
+  booker:
+    command: Muon
+    extensions: [gnome-3-28]
+    plugs:
+      - desktop
+      - gsettings
+      - wayland
+      - x11
+      - home
+    common-id: com.github.amka.muon
+
+parts:
+  booker:
+    # See 'snapcraft plugins'
+    plugin: dotnet3
+    dotnet-version: 3.1
+    dotnet-runtime-version: 3.1.3
+    source: .
+    # parse-info: [usr/share/metainfo/com.github.amka.booker.appdata.xml]
