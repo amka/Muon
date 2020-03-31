@@ -27,7 +27,7 @@ namespace Muon
             header.OpenButton.Clicked += Editor.Open;
             header.SaveButton.Clicked += Editor.SaveAs;
 
-            var FormatBar = new FormatBar();
+            var FormatBar = new FormatBar(Orientation.Horizontal, 6);
             var FormatRevealer = new Revealer();
             FormatRevealer.Add(FormatBar);
 
@@ -38,9 +38,36 @@ namespace Muon
             content.PackStart(Editor.View, true, true, 0);
             Add(content);
 
-            header.FormatButton.Toggled += (sender, args) => {
+            header.FormatButton.Toggled += (sender, args) =>
+            {
                 FormatRevealer.RevealChild = !FormatRevealer.RevealChild;
             };
+
+            SetupActions();
+        }
+
+        void SetupActions()
+        {
+            var formatActions = new GLib.SimpleActionGroup();
+
+            var actionBold = new GLib.SimpleAction("bold", null);
+            actionBold.Activated += (sender, args) =>
+            {
+                Console.WriteLine("format-bold activated");
+            };
+            formatActions.AddAction(actionBold);
+            InsertActionGroup("format", formatActions);
+
+            var documentActions = new GLib.SimpleActionGroup();
+            var actionDocumentOpen = new GLib.SimpleAction("open", null);
+            actionDocumentOpen.Activated += Editor.Open;
+            var actionDocumentSaveAs = new GLib.SimpleAction("save-as", null);
+            actionDocumentSaveAs.Activated += Editor.SaveAs;
+
+            documentActions.AddAction(actionDocumentOpen);
+            documentActions.AddAction(actionDocumentSaveAs);
+
+            InsertActionGroup("document", documentActions);
         }
 
         private void UpdateSubtitle(object sender, EventArgs args)

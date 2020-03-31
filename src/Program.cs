@@ -13,6 +13,8 @@ namespace Muon
             var app = new Application("com.github.amka.muon", GLib.ApplicationFlags.None);
             app.Register(GLib.Cancellable.Current);
 
+            Actions.SetupFormatActions(app);
+
             var win = new MainWindow(app);
 
             win.ShowAll();
