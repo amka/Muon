@@ -31,8 +31,16 @@ bld/
 [Oo]ut/
 msbuild.log
 msbuild.err
-msbuild.wrn
+msbuild.wrn5
 
 # Visual Studio 2015
 .vs/
 
+# Flatpack
+.flatpak-builder
+build-dir
+repo
+
+# AppImage
+.AppImage
+AppDir
