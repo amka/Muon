@@ -49,9 +49,17 @@ namespace Muon
             var actionBold = new GLib.SimpleAction("bold", null);
             actionBold.Activated += (sender, args) =>
             {
-                Console.WriteLine("format-bold activated");
+                Editor.ToggleTag("bold");
             };
             formatActions.AddAction(actionBold);
+
+            var actionFormatClear = new GLib.SimpleAction("clear", null);
+            actionFormatClear.Activated += (sender, args) =>
+            {
+                Editor.ClearTags();
+            };
+            formatActions.AddAction(actionFormatClear);
+            
             InsertActionGroup("format", formatActions);
 
             var documentActions = new GLib.SimpleActionGroup();

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using Gtk;
 using Muon.Models;
 
@@ -17,10 +18,26 @@ namespace Muon.Widgets
         public event EventHandler Opened;
         public event EventHandler Saved;
 
+        Dictionary<string, TextTag> Tags = new Dictionary<string, TextTag>(){
+            {"bold", new TextTag("bold"){Weight=Pango.Weight.Bold}},
+            {"italic", new TextTag("italic"){Style=Pango.Style.Italic}},
+            {"underline", new TextTag("underline"){Underline=Pango.Underline.Single}},
+            {"justify-left", new TextTag("justify-left"){Justification=Justification.Left}},
+            {"justify-right", new TextTag("justify-right"){Justification=Justification.Right}},
+            {"justify-center", new TextTag("justify-center"){Justification=Justification.Center}},
+            {"justify-fill", new TextTag("justify-fill"){Justification=Justification.Fill}},
+        };
+
         public Editor(Window parent)
         {
             Parent = parent;
-            TextBuffer = new TextBuffer(null);
+
+            TextTagTable tagTable = new TextTagTable();
+            foreach (var tag in Tags)
+            {
+                tagTable.Add(tag.Value);
+            }
+            TextBuffer = new TextBuffer(tagTable);
             EditorView = new EditorView(TextBuffer);
 
             View = new ScrolledWindow()
@@ -29,7 +46,7 @@ namespace Muon.Widgets
             };
             View.StyleContext.AddClass("view");
             View.Add(EditorView);
-            
+
             Document = new Document();
 
             // Editor.KeyReleaseEvent += KeyPressReleased;
@@ -60,6 +77,36 @@ namespace Muon.Widgets
                 formatPopover.Popup();
             }
         }
+
+        internal void ToggleTag(string tagName)
+        {
+            var tag = Tags[tagName];
+            TextIter start, end;
+            var hasBounds = TextBuffer.GetSelectionBounds(out start, out end);
+            if (hasBounds)
+            {
+                if (start.HasTag(tag))
+                {
+                    TextBuffer.RemoveTag(tag, start, end);
+                }
+                else
+                {
+                    TextBuffer.ApplyTag(tag, start, end);
+                }
+            }
+        }
+
+        internal void ClearTags() {
+            TextIter start, end;
+            var hasBounds = TextBuffer.GetSelectionBounds(out start, out end);
+            if (!hasBounds)
+            {
+                start = TextBuffer.StartIter;
+                end = TextBuffer.EndIter;
+            }
+
+            TextBuffer.RemoveAllTags(start, end);
+        } 
 
         public async void SaveAs(object sender, EventArgs e)
         {

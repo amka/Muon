@@ -13,6 +13,11 @@ namespace Muon
             {"format.bold", "<Control>b"},
             {"format.italic", "<Control>i"},
             {"format.underline", "<Control>u"},
+            {"format.clear", ""},
+            {"justify.left", "<Control>b"},
+            {"justify.right", "<Control>i"},
+            {"justify.center", "<Control>u"},
+            {"justify.fill", "<Control>u"},
         };
 
         public static SimpleAction ActionFromGroup(string actionName, SimpleActionGroup actionGroup)

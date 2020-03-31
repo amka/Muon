@@ -36,26 +36,31 @@ namespace Muon.Widgets
             // Justify Bar
             var justifyLeftButton = new Button();
             justifyLeftButton.Image = Image.NewFromIconName("format-justify-left-symbolic", IconSize.SmallToolbar);
-            justifyLeftButton.ActionName = "win.justify-left";
+            justifyLeftButton.ActionName = "justify.left";
 
             var justifyRightButton = new Button();
             justifyRightButton.Image = Image.NewFromIconName("format-justify-right-symbolic", IconSize.SmallToolbar);
-            justifyRightButton.ActionName = "win.justify-right";
+            justifyRightButton.ActionName = "justify.right";
 
             var justifyCenterButton = new Button();
             justifyCenterButton.Image = Image.NewFromIconName("format-justify-center-symbolic", IconSize.SmallToolbar);
-            justifyCenterButton.ActionName = "win.justify-center";
+            justifyCenterButton.ActionName = "justify.center";
+
+            var justifyFillButton = new Button();
+            justifyFillButton.Image = Image.NewFromIconName("format-justify-fill-symbolic", IconSize.SmallToolbar);
+            justifyFillButton.ActionName = "justify.fill";
 
             var justifyGrid = new Grid();
             justifyGrid.StyleContext.AddClass("linked");
             justifyGrid.Add(justifyLeftButton);
             justifyGrid.Add(justifyCenterButton);
             justifyGrid.Add(justifyRightButton);
+            justifyGrid.Add(justifyFillButton);
 
             // Remove formatting button
             var clearButton = new Button();
             clearButton.Image = Image.NewFromIconName("edit-clear-symbolic", IconSize.SmallToolbar);
-            clearButton.ActionName = "win.format-clear";
+            clearButton.ActionName = "format.clear";
 
             Add(formatGrid);
             Add(justifyGrid);
