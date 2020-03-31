@@ -40,7 +40,8 @@ namespace Muon.Widgets
             var prefButton = new ModelButton();
             prefButton.Text = "Preferences";
             // prefButton.ActionName = "win.open_preferences";
-            prefButton.Clicked += (sender, args) => {
+            prefButton.Clicked += (sender, args) =>
+            {
                 Console.WriteLine("Pref clicked");
                 var dlg = new PreferencesDialog();
                 dlg.Run();
@@ -56,7 +57,7 @@ namespace Muon.Widgets
             menuGrid.Attach(fontSizeGrid, 0, 0, 3, 1);
             menuGrid.Attach(menuSeparator, 0, 2, 3, 1);
             menuGrid.Attach(prefButton, 0, 3, 3, 1);
-            
+
             menuGrid.ShowAll();
 
             Add(menuGrid);

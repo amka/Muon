@@ -8,7 +8,7 @@ namespace Muon
     class MainWindow : ApplicationWindow
     {
         Header header;
-        EditorView Editor;
+        Editor Editor;
 
         public MainWindow(Gtk.Application application) : base(application)
         {
@@ -18,15 +18,29 @@ namespace Muon
             Titlebar = header;
 
             DeleteEvent += Window_DeleteEvent;
+            var actions = new GLib.SimpleActionGroup();
 
-            Editor = new EditorView(this);
+            Editor = new Editor(this);
             Editor.Opened += UpdateSubtitle;
             Editor.Saved += UpdateSubtitle;
 
             header.OpenButton.Clicked += Editor.Open;
             header.SaveButton.Clicked += Editor.SaveAs;
 
-            Add(Editor.View);
+            var FormatBar = new FormatBar();
+            var FormatRevealer = new Revealer();
+            FormatRevealer.Add(FormatBar);
+
+            FormatRevealer.RevealChild = false;
+
+            var content = new Box(Orientation.Vertical, 0);
+            content.PackStart(FormatRevealer, false, true, 0);
+            content.PackStart(Editor.View, true, true, 0);
+            Add(content);
+
+            header.FormatButton.Toggled += (sender, args) => {
+                FormatRevealer.RevealChild = !FormatRevealer.RevealChild;
+            };
         }
 
         private void UpdateSubtitle(object sender, EventArgs args)
@@ -42,6 +56,11 @@ namespace Muon
         void SelectionEvent(object o, EventArgs args)
         {
             Console.WriteLine($"Got Event {args.ToString()}");
+        }
+
+        void AddTab()
+        {
+
         }
     }
 }

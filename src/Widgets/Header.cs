@@ -1,3 +1,4 @@
+using System;
 using Gtk;
 
 namespace Muon.Widgets
@@ -6,8 +7,12 @@ namespace Muon.Widgets
     {
         public Button OpenButton;
         public Button SaveButton;
+        public ToggleButton FormatButton;
         public Button MenuButton => menuButton;
         MenuButton menuButton;
+        
+        public event EventHandler SearchToggled;
+        public event EventHandler FormatToggled;
 
         public Header()
         {
@@ -22,14 +27,23 @@ namespace Muon.Widgets
             SaveButton = new Button("document-save-as", IconSize.LargeToolbar);
             SaveButton.TooltipMarkup = "Save document as...";
 
-            PackStart(OpenButton);
-            PackStart(SaveButton);
+            var searchButton = new ToggleButton();
+            searchButton.Image = Image.NewFromIconName("edit-find", IconSize.LargeToolbar);
+            // searchButton.Toggled += SearchToggled;
+
+            FormatButton = new ToggleButton();
+            FormatButton.Image = Image.NewFromIconName("insert-text", IconSize.LargeToolbar);
 
             menuButton = new MenuButton();
             menuButton.Image = Image.NewFromIconName("open-menu", IconSize.LargeToolbar);
             menuButton.TooltipText = "Menu";
             menuButton.ShowAll();
+
+            PackStart(OpenButton);
+            PackStart(SaveButton);
             PackEnd(menuButton);
+            PackEnd(searchButton);
+            PackEnd(FormatButton);
 
             // Connect Popover
             var popover = new MenuPopover(menuButton);
