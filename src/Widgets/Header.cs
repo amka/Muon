@@ -27,7 +27,7 @@ namespace Muon.Widgets
             OpenButton.ActionName = "document.open";
             SaveButton = new Button("document-save-as", IconSize.LargeToolbar);
             SaveButton.TooltipMarkup = "Save document as...";
-            OpenButton.ActionName = "document.save-as";
+            SaveButton.ActionName = "document.save-as";
 
             var searchButton = new ToggleButton();
             searchButton.Image = Image.NewFromIconName("edit-find", IconSize.LargeToolbar);

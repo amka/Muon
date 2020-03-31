@@ -18,14 +18,10 @@ namespace Muon
             Titlebar = header;
 
             DeleteEvent += Window_DeleteEvent;
-            var actions = new GLib.SimpleActionGroup();
 
             Editor = new Editor(this);
             Editor.Opened += UpdateSubtitle;
             Editor.Saved += UpdateSubtitle;
-
-            header.OpenButton.Clicked += Editor.Open;
-            header.SaveButton.Clicked += Editor.SaveAs;
 
             var FormatBar = new FormatBar(Orientation.Horizontal, 6);
             var FormatRevealer = new Revealer();

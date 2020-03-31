@@ -29,6 +29,8 @@ namespace Muon.Widgets
             };
             View.StyleContext.AddClass("view");
             View.Add(EditorView);
+            
+            Document = new Document();
 
             // Editor.KeyReleaseEvent += KeyPressReleased;
             // EditorView.PopulatePopup += PopulatePopup;
