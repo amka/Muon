@@ -7,6 +7,7 @@ namespace Muon
     public static class Actions
     {
         static Dictionary<string, string> FormatActionMap = new Dictionary<string, string>(){
+            {"app.quit", "<Control>Q"},
             {"document.open", "<Control>o"},
             {"document.save", "<Control>s"},
             {"document.save-as", "<Control><Shift>s"},

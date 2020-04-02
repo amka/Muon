@@ -17,6 +17,14 @@ namespace Muon
 
             var win = new MainWindow(app);
 
+            // Handle Quit action
+            var actionQuit = new GLib.SimpleAction("quit", null);
+            actionQuit.Activated += (object sender, GLib.ActivatedArgs args) =>
+            {
+                Application.Quit();
+            };
+            app.AddAction(actionQuit);
+
             win.ShowAll();
             Application.Run();
         }
