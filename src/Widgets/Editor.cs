@@ -3,6 +3,8 @@ using System.IO;
 using System.Collections.Generic;
 using Gtk;
 using Muon.Models;
+using Markdig;
+using Markdig.Renderers;
 
 namespace Muon.Widgets
 {
@@ -155,7 +157,23 @@ namespace Muon.Widgets
                 try
                 {
                     var text = await File.ReadAllTextAsync(dlg.Filename, System.Text.Encoding.UTF8);
-                    TextBuffer.Text = text;
+                    
+                    var pipeline = new MarkdownPipelineBuilder().Build();
+                    
+                    using (var writer = new StringWriter())
+                    {
+                        var renderer = new PangoRenderer(writer);
+                        pipeline.Setup(renderer);
+
+                        var document = Markdown.Parse(text, pipeline);
+                        renderer.Render(document);
+                        writer.Flush();
+                        
+                        var iter = TextBuffer.StartIter;
+                        TextBuffer.InsertMarkup(ref iter, writer.ToString());
+                    }
+                    
+                    // TextBuffer.Text = Markdown.ToHtml(text, pipeline);
 
                     Document = new Document()
                     {
