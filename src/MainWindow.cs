@@ -12,13 +12,10 @@ namespace Muon
         Muon.Widgets.Paned container;
         Editor _editor;
         DocumentsList _docList;
-        DocumentsStorage docStorage;
 
         public MainWindow(Gtk.Application application) : base(application)
         {
             DefaultSize = new Gdk.Size(800, 600);
-
-            InitStorage();
 
             header = new Header();
             Titlebar = header;
@@ -30,6 +27,8 @@ namespace Muon
             _docList = container.Sidebar.DocumentsList;
             _editor = container.Editor;
             Add(container);
+
+            container.Sidebar.DocumentsList.RefreshItems();
 
             var FormatBar = new FormatBar(Orientation.Horizontal, 6);
             var FormatRevealer = new Revealer();
@@ -48,20 +47,6 @@ namespace Muon
             // };
 
             SetupActions();
-        }
-
-        void InitStorage()
-        {
-            var configPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appConfigPath = System.IO.Path.Combine(configPath, "Muon");
-            if (!Directory.Exists(appConfigPath))
-            {
-                Directory.CreateDirectory(appConfigPath);
-            }
-
-            docStorage = new DocumentsStorage(System.IO.Path.Combine(appConfigPath, "documents.db"));
-            docStorage.Database.EnsureCreated();
-            docStorage.Migrate();
         }
 
         void SetupActions()
@@ -94,9 +79,12 @@ namespace Muon
             // header.Subtitle = edi.Document.Name;
         }
 
-        public async void CreateDocument()
+        public void CreateDocument()
         {
-            await docStorage.AddDocument();
+            DocumentsStorage.Instance.AddDocument();
+        }
+
+        public void RemoveDocument() {
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
@@ -107,11 +95,6 @@ namespace Muon
         void SelectionEvent(object o, EventArgs args)
         {
             Console.WriteLine($"Got Event {args.ToString()}");
-        }
-
-        void AddTab()
-        {
-
         }
     }
 }

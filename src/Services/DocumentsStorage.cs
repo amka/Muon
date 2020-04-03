@@ -1,48 +1,72 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
+using LiteDB;
 using Microsoft.EntityFrameworkCore;
 using Muon.Models;
 
 namespace Muon.Services
 {
-    public class DocumentsStorage : DbContext
+    public class DocumentsStorage
     {
+        private static readonly Object s_lock = new Object();
+        private static DocumentsStorage instance = null;
 
-        string DbPath;
-        public DbSet<Document> Documents;
+        public LiteDatabase db;
+        public event EventHandler DocumentAdded = delegate { };
+        public event EventHandler DocumentRemoved = delegate { };
 
-        public DocumentsStorage(string path = "./documents.db")
+
+        public DocumentsStorage()
         {
-            DbPath = path;
+            var configPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appConfigPath = Path.Combine(configPath, "Muon");
+            EnsureFolderCreated(appConfigPath);
+
+            db = new LiteDatabase(Path.Combine(appConfigPath, "documents.db"));
+        }
+        public static DocumentsStorage Instance
+        {
+            get
+            {
+                if (instance != null) return instance;
+                Monitor.Enter(s_lock);
+                DocumentsStorage temp = new DocumentsStorage();
+                Interlocked.Exchange(ref instance, temp);
+                Monitor.Exit(s_lock);
+                return instance;
+            }
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        void EnsureFolderCreated(string appConfigPath)
         {
-            options.UseSqlite($"Data Source={DbPath}");
+            if (!Directory.Exists(appConfigPath))
+            {
+                Directory.CreateDirectory(appConfigPath);
+            }
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public IEnumerable<Document> All()
         {
-            modelBuilder.Entity<Document>().ToTable("Documents");
+            var docs = db.GetCollection<Document>().FindAll();
+            return docs;
         }
 
-        public void Migrate()
-        {
-            Database.Migrate();
-        }
-
-        public async Task<Document> AddDocument()
+        public Document AddDocument()
         {
             var doc = new Document() { Title = "New document" };
-            await AddAsync(doc);
-            await SaveChangesAsync();
+            db.GetCollection<Document>().Insert(doc);
+
+            DocumentAdded(this, EventArgs.Empty);
             return doc;
         }
 
         public void RemoveDocument(Document doc)
         {
-            Remove(doc);
+            db.GetCollection<Document>().Delete(doc.Id);
+            DocumentRemoved(this, EventArgs.Empty);
         }
     }
 }
