@@ -18,16 +18,14 @@ namespace Muon
         {
             DefaultSize = new Gdk.Size(800, 600);
 
-            docStorage = new DocumentsStorage("./documents.db");
-            docStorage.Database.EnsureCreated();
-            docStorage.Migrate();
+            InitStorage();
 
             header = new Header();
             Titlebar = header;
 
             DeleteEvent += Window_DeleteEvent;
 
-            var container = new Muon.Widgets.Paned(Orientation.Horizontal, this);
+            container = new Muon.Widgets.Paned(Orientation.Horizontal, this);
             // Link to class vars
             _docList = container.Sidebar.DocumentsList;
             _editor = container.Editor;
@@ -50,6 +48,20 @@ namespace Muon
             // };
 
             SetupActions();
+        }
+
+        void InitStorage()
+        {
+            var configPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appConfigPath = System.IO.Path.Combine(configPath, "Muon");
+            if (!Directory.Exists(appConfigPath))
+            {
+                Directory.CreateDirectory(appConfigPath);
+            }
+
+            docStorage = new DocumentsStorage(System.IO.Path.Combine(appConfigPath, "documents.db"));
+            docStorage.Database.EnsureCreated();
+            docStorage.Migrate();
         }
 
         void SetupActions()
