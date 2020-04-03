@@ -1,11 +1,15 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 
 namespace Muon.Models
 {
     public class Document
     {
-        public Uri FilePath { get; set; }
-        public string Name => Path.GetFileName(FilePath.LocalPath);
+        public int Id { get; set; }
+
+        [Required]
+        public string Title { get; set; }
+        public string Content { get; set; }
     }
 }

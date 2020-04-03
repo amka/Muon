@@ -22,27 +22,28 @@ namespace Muon.Widgets
             ShowCloseButton = true;
             // StyleContext.AddClass("default-decoration");
 
-            OpenButton = new Button("document-open", IconSize.LargeToolbar);
-            OpenButton.TooltipMarkup = "Open document";
-            OpenButton.ActionName = "document.open";
-            SaveButton = new Button("document-save-as", IconSize.LargeToolbar);
-            SaveButton.TooltipMarkup = "Save document as...";
-            SaveButton.ActionName = "document.save-as";
+            // OpenButton = new Button("document-open", IconSize.LargeToolbar);
+            // OpenButton.TooltipMarkup = "Open document";
+            // OpenButton.ActionName = "document.open";
+            // SaveButton = new Button("document-save-as", IconSize.LargeToolbar);
+            // SaveButton.TooltipMarkup = "Save document as...";
+            // SaveButton.ActionName = "document.save-as";
 
             var searchButton = new ToggleButton();
             searchButton.Image = Image.NewFromIconName("edit-find", IconSize.LargeToolbar);
-            // searchButton.Toggled += SearchToggled;
+            searchButton.ActionName = "app.toggle-search";
 
             FormatButton = new ToggleButton();
             FormatButton.Image = Image.NewFromIconName("insert-text", IconSize.LargeToolbar);
+            FormatButton.ActionName = "app.toggle-format";
 
             menuButton = new MenuButton();
             menuButton.Image = Image.NewFromIconName("open-menu", IconSize.LargeToolbar);
             menuButton.TooltipText = "Menu";
             menuButton.ShowAll();
 
-            PackStart(OpenButton);
-            PackStart(SaveButton);
+            // PackStart(OpenButton);
+            // PackStart(SaveButton);
             PackEnd(menuButton);
             PackEnd(searchButton);
             PackEnd(FormatButton);
