@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using LiteDB;
-using Microsoft.EntityFrameworkCore;
 using Norka.Models;
 
 namespace Norka.Services
 {
-    public class DocumentsStorage
+    public class DocumentsStorage : IDocumentsStorage
     {
         private static readonly Object s_lock = new Object();
         private static DocumentsStorage instance = null;
@@ -27,18 +25,19 @@ namespace Norka.Services
 
             db = new LiteDatabase(Path.Combine(appConfigPath, "documents.db"));
         }
-        public static DocumentsStorage Instance
-        {
-            get
-            {
-                if (instance != null) return instance;
-                Monitor.Enter(s_lock);
-                DocumentsStorage temp = new DocumentsStorage();
-                Interlocked.Exchange(ref instance, temp);
-                Monitor.Exit(s_lock);
-                return instance;
-            }
-        }
+
+        // public static DocumentsStorage Instance
+        // {
+        //     get
+        //     {
+        //         if (instance != null) return instance;
+        //         Monitor.Enter(s_lock);
+        //         DocumentsStorage temp = new DocumentsStorage();
+        //         Interlocked.Exchange(ref instance, temp);
+        //         Monitor.Exit(s_lock);
+        //         return instance;
+        //     }
+        // }
 
         void EnsureFolderCreated(string appConfigPath)
         {

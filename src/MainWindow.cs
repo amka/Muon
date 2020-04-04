@@ -3,6 +3,7 @@ using System.IO;
 using Gtk;
 using Norka.Services;
 using Norka.Widgets;
+using AutoDI;
 
 namespace Norka
 {
@@ -13,8 +14,12 @@ namespace Norka
         Editor _editor;
         DocumentsList _docList;
 
+        IDocumentsStorage storage;
+
         public MainWindow(Gtk.Application application) : base(application)
         {
+            storage = GlobalDI.GetService<IDocumentsStorage>();
+
             DefaultSize = new Gdk.Size(800, 600);
 
             header = new Header();
@@ -81,10 +86,11 @@ namespace Norka
 
         public void CreateDocument()
         {
-            DocumentsStorage.Instance.AddDocument();
+            storage.AddDocument();
         }
 
-        public void RemoveDocument() {
+        public void RemoveDocument()
+        {
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)

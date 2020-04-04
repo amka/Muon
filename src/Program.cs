@@ -8,6 +8,7 @@ namespace Norka
         [STAThread]
         public static void Main(string[] args)
         {
+            AutoDI.Generated.AutoDI.Init();
             Application.Init();
 
             var app = new Application("com.github.amka.norka", GLib.ApplicationFlags.None);

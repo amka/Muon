@@ -1,4 +1,4 @@
-using System.Linq;
+using AutoDI;
 using Gtk;
 using Norka.Services;
 
@@ -6,14 +6,14 @@ namespace Norka.Widgets
 {
     public class DocumentsList : ListBox
     {
-        DocumentsStorage storage;
+        readonly IDocumentsStorage storage;
 
         public DocumentsList()
         {
             Hexpand = true;
             Vexpand = true;
-            
-            storage = DocumentsStorage.Instance;
+
+            storage = GlobalDI.GetService<IDocumentsStorage>();
             storage.DocumentAdded += (sender, args) => RefreshItems();
             storage.DocumentRemoved += (sender, args) => RefreshItems();
         }
@@ -50,7 +50,7 @@ namespace Norka.Widgets
                 AddItem(doc.Title);
             }
             SelectRow(selected);
-            
+
             ShowAll();
         }
     }

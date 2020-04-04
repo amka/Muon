@@ -9,7 +9,7 @@ Application developed with [.net core 3.1](https://dot.net) the only requirement
 Clone or download this repo and gets inside of its folder via terminal to restore dependencies:
 
 ```bash
-git clone https://github.com/amka/Muon.git
+git clone https://github.com/amka/Norka.git
 cd Norka
 dotnet restore
 ```
