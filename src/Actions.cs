@@ -2,7 +2,7 @@ using Gtk;
 using GLib;
 using System.Collections.Generic;
 
-namespace Muon
+namespace Norka
 {
     public static class Actions
     {

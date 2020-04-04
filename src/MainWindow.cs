@@ -1,15 +1,15 @@
 using System;
 using System.IO;
 using Gtk;
-using Muon.Services;
-using Muon.Widgets;
+using Norka.Services;
+using Norka.Widgets;
 
-namespace Muon
+namespace Norka
 {
     class MainWindow : ApplicationWindow
     {
         Header header;
-        Muon.Widgets.Paned container;
+        Norka.Widgets.Paned container;
         Editor _editor;
         DocumentsList _docList;
 
@@ -22,7 +22,7 @@ namespace Muon
 
             DeleteEvent += Window_DeleteEvent;
 
-            container = new Muon.Widgets.Paned(Orientation.Horizontal, this);
+            container = new Norka.Widgets.Paned(Orientation.Horizontal, this);
             // Link to class vars
             _docList = container.Sidebar.DocumentsList;
             _editor = container.Editor;

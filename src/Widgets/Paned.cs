@@ -1,8 +1,8 @@
 using System;
 using Gtk;
-using Muon.Services;
+using Norka.Services;
 
-namespace Muon.Widgets
+namespace Norka.Widgets
 {
     public class Paned : Gtk.Paned
     {

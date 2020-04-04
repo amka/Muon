@@ -1,4 +1,4 @@
-# Muon
+# Norka
 
 Text editor built for GNOME on top of [GtkSharp](https://github.com/GtkSharp/GtkSharp), .NET Core and GTK3. Project under development so it's not production ready yet and will be massively changing in time :)
 
@@ -10,7 +10,7 @@ Clone or download this repo and gets inside of its folder via terminal to restor
 
 ```bash
 git clone https://github.com/amka/Muon.git
-cd Muon
+cd Norka
 dotnet restore
 ```
 

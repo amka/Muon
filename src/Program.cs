@@ -1,7 +1,7 @@
 using System;
 using Gtk;
 
-namespace Muon
+namespace Norka
 {
     class Program
     {
@@ -10,7 +10,7 @@ namespace Muon
         {
             Application.Init();
 
-            var app = new Application("com.github.amka.muon", GLib.ApplicationFlags.None);
+            var app = new Application("com.github.amka.norka", GLib.ApplicationFlags.None);
             app.Register(GLib.Cancellable.Current);
 
             Actions.SetupFormatActions(app);

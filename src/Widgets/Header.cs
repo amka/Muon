@@ -1,7 +1,7 @@
 using System;
 using Gtk;
 
-namespace Muon.Widgets
+namespace Norka.Widgets
 {
     public class Header : HeaderBar
     {
@@ -16,7 +16,7 @@ namespace Muon.Widgets
 
         public Header()
         {
-            Title = "Muon";
+            Title = "Norka";
             Subtitle = "";
             HasSubtitle = Subtitle.Length > 0;
             ShowCloseButton = true;

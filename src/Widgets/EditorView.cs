@@ -1,7 +1,7 @@
 using System;
 using Gtk;
 
-namespace Muon.Widgets
+namespace Norka.Widgets
 {
     public class EditorView : TextView
     {

@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using LiteDB;
 using Microsoft.EntityFrameworkCore;
-using Muon.Models;
+using Norka.Models;
 
-namespace Muon.Services
+namespace Norka.Services
 {
     public class DocumentsStorage
     {
@@ -22,7 +22,7 @@ namespace Muon.Services
         public DocumentsStorage()
         {
             var configPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appConfigPath = Path.Combine(configPath, "Muon");
+            var appConfigPath = Path.Combine(configPath, "Norka");
             EnsureFolderCreated(appConfigPath);
 
             db = new LiteDatabase(Path.Combine(appConfigPath, "documents.db"));

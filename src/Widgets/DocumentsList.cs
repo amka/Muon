@@ -1,8 +1,8 @@
 using System.Linq;
 using Gtk;
-using Muon.Services;
+using Norka.Services;
 
-namespace Muon.Widgets
+namespace Norka.Widgets
 {
     public class DocumentsList : ListBox
     {

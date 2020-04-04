@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 
-namespace Muon.Models
+namespace Norka.Models
 {
     public class Document
     {

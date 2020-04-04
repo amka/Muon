@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Gtk;
-using Muon.Models;
+using Norka.Models;
 
-namespace Muon.Widgets
+namespace Norka.Widgets
 {
     public class Editor
     {

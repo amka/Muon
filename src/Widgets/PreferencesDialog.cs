@@ -1,7 +1,7 @@
 using Gtk;
 using GLib;
 
-namespace Muon.Widgets
+namespace Norka.Widgets
 {
     public class PreferencesDialog : Dialog
     {

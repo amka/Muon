@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Muon.Services;
+using Norka.Services;
 
-namespace Muon.Migrations
+namespace Norka.Migrations
 {
     [DbContext(typeof(DocumentsStorage))]
     [Migration("20200403123145_InitialCreate")]

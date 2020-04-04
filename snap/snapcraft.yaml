@@ -1,8 +1,8 @@
-name: muon
+name: norka
 version: git
 base: core18
-title: Muon
-icon: data/muon.png
+title: Norka
+icon: data/norka.png
 summary: Text editor baked for simplicity.
 description: |
   This is my-snap's description. You have a paragraph or two to tell the
@@ -15,7 +15,7 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 
 apps:
   booker:
-    command: Muon
+    command: Norka
     extensions: [gnome-3-28]
     plugs:
       - desktop
@@ -23,7 +23,7 @@ apps:
       - wayland
       - x11
       - home
-    common-id: com.github.amka.muon
+    common-id: com.github.amka.norka
 
 parts:
   booker:

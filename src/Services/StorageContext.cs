@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using Muon.Models;
+using Norka.Models;
 
-namespace Muon.Services
+namespace Norka.Services
 {
     public class StorageContext : DbContext
     {
