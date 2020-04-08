@@ -18,17 +18,10 @@ namespace Norka.Widgets
             storage.DocumentRemoved += (sender, args) => RefreshItems();
         }
 
-        public void AddItem(string title, int position = 0)
+        public void AddItem(string title, int documentId, int position = 0)
         {
-            var label = new Label();
-            label.Markup = $"<b>{title}</b>";
-            label.Vexpand = true;
-            label.Valign = Align.Center;
-
-            var item = new Grid();
-            item.Margin = 6;
-            item.Add(label);
-
+            var item = new DocumentListRow(title);
+            item.DocumentId = documentId;
             Insert(item, position);
             ShowAll();
         }
@@ -47,7 +40,7 @@ namespace Norka.Widgets
 
             foreach (var doc in docs)
             {
-                AddItem(doc.Title);
+                AddItem(doc.Title, doc.Id);
             }
             SelectRow(selected);
 

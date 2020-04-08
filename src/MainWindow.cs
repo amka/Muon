@@ -76,6 +76,10 @@ namespace Norka
             actionDocumentOpen.Activated += (sender, args) => CreateDocument();
             documentActions.AddAction(actionDocumentOpen);
 
+            var actionDocumentRemove = new GLib.SimpleAction("remove", null);
+            actionDocumentRemove.Activated += (sender, args) => RemoveDocument();
+            documentActions.AddAction(actionDocumentRemove);
+
             InsertActionGroup("document", documentActions);
         }
 
@@ -91,6 +95,11 @@ namespace Norka
 
         public void RemoveDocument()
         {
+            var row = _docList.SelectedRow;
+            if (row == null) return;
+
+            var child = row.Child as DocumentListRow;
+            storage.RemoveDocument(child.DocumentId);
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)

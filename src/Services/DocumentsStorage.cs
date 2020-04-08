@@ -10,7 +10,6 @@ namespace Norka.Services
     public class DocumentsStorage : IDocumentsStorage
     {
         private static readonly Object s_lock = new Object();
-        private static DocumentsStorage instance = null;
 
         public LiteDatabase db;
         public event EventHandler DocumentAdded = delegate { };
@@ -62,9 +61,9 @@ namespace Norka.Services
             return doc;
         }
 
-        public void RemoveDocument(Document doc)
+        public void RemoveDocument(int documentId)
         {
-            db.GetCollection<Document>().Delete(doc.Id);
+            db.GetCollection<Document>().Delete(documentId);
             DocumentRemoved(this, EventArgs.Empty);
         }
     }
