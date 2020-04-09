@@ -1,0 +1,31 @@
+list {
+    background-color: #e2e2e2;
+}
+
+list row {
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+list row:selected {
+    border-top-color: #b8b8b8;
+    border-bottom-color: #f7f7f7;
+    background-color: cornflowerblue;
+}
+
+.dark list row {
+    border-top-color: #3d3d3d;
+    border-bottom-color: #3d3d3d;
+    background-color: maroon;
+}
+
+.dark list row:selected {
+    border-top: 1px solid #2b2b2b;
+    border-bottom: 1px solid #424242;
+    background-image: linear-gradient(
+        to bottom,
+        #303030 0%,
+        #343434 99%,
+        #2f2f2f 100%
+    );
+}
