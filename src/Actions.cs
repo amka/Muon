@@ -17,6 +17,7 @@ namespace Norka
             {"format.italic", "<Control>i"},
             {"format.underline", "<Control>u"},
             {"format.clear", ""},
+            {"format.toggle", ""},
             {"justify.left", "<Control>b"},
             {"justify.right", "<Control>i"},
             {"justify.center", "<Control>u"},

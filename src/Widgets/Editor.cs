@@ -3,20 +3,26 @@ using System.IO;
 using System.Collections.Generic;
 using Gtk;
 using Norka.Models;
+using Norka.Services;
+using AutoDI;
 
 namespace Norka.Widgets
 {
     public class Editor
     {
+        readonly IDocumentsStorage storage;
+
+        Window Parent;
         TextBuffer TextBuffer;
         EditorView EditorView;
-        public ScrolledWindow View;
-        Window Parent;
+        FormatBar FormatBar;
+        Revealer FormatRevealer;
+
+        public Box View;
         public Document Document;
 
-
-        public event EventHandler Opened;
-        public event EventHandler Saved;
+        public event EventHandler Opened = delegate { };
+        public event EventHandler Saved = delegate { };
 
         Dictionary<string, TextTag> Tags = new Dictionary<string, TextTag>(){
             {"bold", new TextTag("bold"){Weight=Pango.Weight.Bold}},
@@ -31,6 +37,23 @@ namespace Norka.Widgets
         public Editor(Window parent)
         {
             Parent = parent;
+            View = new Box(Orientation.Vertical, 0);
+
+            // Load services
+            storage = GlobalDI.GetService<IDocumentsStorage>();
+
+            // Init widgets
+            var scrolled = new ScrolledWindow()
+            {
+                Expand = true
+            };
+            View.StyleContext.AddClass("view");
+
+            FormatBar = new FormatBar(Orientation.Horizontal, 6);
+            FormatRevealer = new Revealer();
+            FormatRevealer.Add(FormatBar);
+
+            FormatRevealer.RevealChild = false;
 
             TextTagTable tagTable = new TextTagTable();
             foreach (var tag in Tags)
@@ -39,15 +62,16 @@ namespace Norka.Widgets
             }
             TextBuffer = new TextBuffer(tagTable);
             EditorView = new EditorView(TextBuffer);
+            scrolled.Add(EditorView);
 
-            View = new ScrolledWindow()
-            {
-                Expand = true
-            };
-            View.StyleContext.AddClass("view");
-            View.Add(EditorView);
+            View.PackStart(FormatRevealer, false, true, 0);
+            View.PackEnd(scrolled, true, true, 0);
         }
 
+        public void ToggleFormatBar()
+        {
+            FormatRevealer.RevealChild = !FormatRevealer.RevealChild;
+        }
 
         private void KeyPressReleased(object o, KeyReleaseEventArgs args)
         {
@@ -102,6 +126,17 @@ namespace Norka.Widgets
             }
 
             TextBuffer.RemoveAllTags(start, end);
+        }
+
+        internal void LoadDocument(int docId)
+        {
+            if (Document != null)
+            {
+                Document.Content = TextBuffer.Text;
+                storage.UpdateDocument(Document);
+            }
+            Document = storage.DocumentById(docId);
+            TextBuffer.Text = Document.Content ?? "";
         }
     }
 }

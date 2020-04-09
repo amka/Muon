@@ -11,6 +11,8 @@ namespace Norka.Services
 
         IEnumerable<Document> All();
         Document AddDocument();
+        void UpdateDocument(Document document);
         void RemoveDocument(int documentId);
+        Document DocumentById(int docId);
     }
 }

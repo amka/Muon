@@ -66,5 +66,18 @@ namespace Norka.Services
             db.GetCollection<Document>().Delete(documentId);
             DocumentRemoved(this, EventArgs.Empty);
         }
+
+        public Document DocumentById(int docId)
+        {
+            return db.GetCollection<Document>().FindById(new BsonValue(docId));
+        }
+
+        public void UpdateDocument(Document document)
+        {
+            db.GetCollection<Document>().Update(
+                new BsonValue(document.Id),
+                document
+            );
+        }
     }
 }

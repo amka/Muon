@@ -9,6 +9,8 @@ namespace Norka.Widgets
     {
         readonly IDocumentsStorage storage;
 
+        public event EventHandler ItemRenamed = delegate { };
+
         public DocumentsList()
         {
             Hexpand = true;
@@ -18,6 +20,13 @@ namespace Norka.Widgets
             storage.DocumentAdded += (sender, args) => RefreshItems();
             storage.DocumentRemoved += (sender, args) => RefreshItems();
 
+        }
+
+        public int? SelectedDocumentId()
+        {
+            if (SelectedRow == null) return null;
+            var row = SelectedRow.Child as DocumentListRow;
+            return row.DocumentId;
         }
 
         public void AddItem(string title, int documentId, int position = 0)
@@ -54,13 +63,17 @@ namespace Norka.Widgets
             bool result = false;
 
             result = base.OnButtonPressEvent(evnt);
+            if (evnt.Type == Gdk.EventType.DoubleButtonPress && evnt.Button == 1)
+            {
+                ItemRenamed(this, EventArgs.Empty);
+            }
 
             if (evnt.Type == Gdk.EventType.ButtonPress && evnt.Button == 3)
             {
 
                 var menuDocumentRemove = new Button("Remove document");
                 menuDocumentRemove.ActionName = "document.remove";
-                
+
                 var menu = new Menu();
                 menu.Add(menuDocumentRemove);
                 menu.ShowAll();

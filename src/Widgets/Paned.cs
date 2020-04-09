@@ -19,7 +19,7 @@ namespace Norka.Widgets
             Pack2(Editor.View, true, false);
 
             // SetSizeRequest(200, -1);
-            Sidebar.SetSizeRequest(196, -1);
+            Sidebar.SetSizeRequest(146, -1);
             Editor.View.SetSizeRequest(320, -1);
         }
     }

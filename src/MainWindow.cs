@@ -20,37 +20,28 @@ namespace Norka
         {
             storage = GlobalDI.GetService<IDocumentsStorage>();
 
+            // Widget initialization
             DefaultSize = new Gdk.Size(800, 600);
+            DeleteEvent += Window_DeleteEvent;
 
+            // Init children widgets
             header = new Header();
             Titlebar = header;
 
-            DeleteEvent += Window_DeleteEvent;
-
             container = new Norka.Widgets.Paned(Orientation.Horizontal, this);
-            // Link to class vars
+            
             _docList = container.Sidebar.DocumentsList;
+            _docList.ListRowActivated += (sender, args) => DocumentSelected();
             _editor = container.Editor;
             Add(container);
 
             container.Sidebar.DocumentsList.RefreshItems();
 
-            var FormatBar = new FormatBar(Orientation.Horizontal, 6);
-            var FormatRevealer = new Revealer();
-            FormatRevealer.Add(FormatBar);
-
-            FormatRevealer.RevealChild = false;
-
             var content = new Box(Orientation.Vertical, 0);
-            content.PackStart(FormatRevealer, false, true, 0);
             content.PackStart(container, true, true, 0);
             Add(content);
 
-            // header.FormatButton.Toggled += (sender, args) =>
-            // {
-            //     FormatRevealer.RevealChild = !FormatRevealer.RevealChild;
-            // };
-
+            // Finally connect actins to window
             SetupActions();
         }
 
@@ -66,6 +57,10 @@ namespace Norka
             var actionFormatClear = new GLib.SimpleAction("clear", null);
             actionFormatClear.Activated += (sender, args) => _editor.ClearTags();
             formatActions.AddAction(actionFormatClear);
+
+            var actionFormatToggle = new GLib.SimpleAction("toggle", null);
+            actionFormatToggle.Activated += (sender, args) => _editor.ToggleFormatBar();
+            formatActions.AddAction(actionFormatToggle);
 
             InsertActionGroup("format", formatActions);
 
@@ -83,11 +78,6 @@ namespace Norka
             InsertActionGroup("document", documentActions);
         }
 
-        private void UpdateSubtitle(object sender, EventArgs args)
-        {
-            // header.Subtitle = edi.Document.Name;
-        }
-
         public void CreateDocument()
         {
             storage.AddDocument();
@@ -95,11 +85,10 @@ namespace Norka
 
         public void RemoveDocument()
         {
-            var row = _docList.SelectedRow;
-            if (row == null) return;
+            var docId = _docList.SelectedDocumentId();
+            if (docId == null) return;
 
-            var child = row.Child as DocumentListRow;
-            storage.RemoveDocument(child.DocumentId);
+            storage.RemoveDocument(docId.GetValueOrDefault());
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
@@ -110,6 +99,14 @@ namespace Norka
         void SelectionEvent(object o, EventArgs args)
         {
             Console.WriteLine($"Got Event {args.ToString()}");
+        }
+
+        void DocumentSelected()
+        {
+            var docId = _docList.SelectedDocumentId();
+            if (docId == null) return;
+
+            _editor.LoadDocument(docId.GetValueOrDefault());
         }
     }
 }

@@ -20,14 +20,7 @@ namespace Norka.Widgets
             Subtitle = "";
             HasSubtitle = Subtitle.Length > 0;
             ShowCloseButton = true;
-            // StyleContext.AddClass("default-decoration");
-
-            // OpenButton = new Button("document-open", IconSize.LargeToolbar);
-            // OpenButton.TooltipMarkup = "Open document";
-            // OpenButton.ActionName = "document.open";
-            // SaveButton = new Button("document-save-as", IconSize.LargeToolbar);
-            // SaveButton.TooltipMarkup = "Save document as...";
-            // SaveButton.ActionName = "document.save-as";
+            StyleContext.AddClass("default-decoration");
 
             var searchButton = new ToggleButton();
             searchButton.Image = Image.NewFromIconName("edit-find", IconSize.LargeToolbar);
@@ -35,7 +28,7 @@ namespace Norka.Widgets
 
             FormatButton = new ToggleButton();
             FormatButton.Image = Image.NewFromIconName("insert-text", IconSize.LargeToolbar);
-            FormatButton.ActionName = "app.toggle-format";
+            FormatButton.ActionName = "format.toggle";
 
             menuButton = new MenuButton();
             menuButton.Image = Image.NewFromIconName("open-menu", IconSize.LargeToolbar);
