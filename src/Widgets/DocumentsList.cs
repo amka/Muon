@@ -1,3 +1,4 @@
+using System;
 using AutoDI;
 using Gtk;
 using Norka.Services;
@@ -16,6 +17,7 @@ namespace Norka.Widgets
             storage = GlobalDI.GetService<IDocumentsStorage>();
             storage.DocumentAdded += (sender, args) => RefreshItems();
             storage.DocumentRemoved += (sender, args) => RefreshItems();
+
         }
 
         public void AddItem(string title, int documentId, int position = 0)
@@ -45,6 +47,26 @@ namespace Norka.Widgets
             SelectRow(selected);
 
             ShowAll();
+        }
+
+        protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
+        {
+            bool result = false;
+
+            result = base.OnButtonPressEvent(evnt);
+
+            if (evnt.Type == Gdk.EventType.ButtonPress && evnt.Button == 3)
+            {
+
+                var menuDocumentRemove = new Button("Remove document");
+                menuDocumentRemove.ActionName = "document.remove";
+                
+                var menu = new Menu();
+                menu.Add(menuDocumentRemove);
+                menu.ShowAll();
+                menu.PopupAtPointer(evnt);
+            }
+            return result;
         }
     }
 }
