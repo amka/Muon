@@ -29,9 +29,10 @@ namespace Norka
             Titlebar = header;
 
             container = new Norka.Widgets.Paned(Orientation.Horizontal, this);
-            
+
             _docList = container.Sidebar.DocumentsList;
-            _docList.ListRowActivated += (sender, args) => DocumentSelected();
+            _docList.SelectedRowsChanged += (sender, args) => DocumentSelected();
+            _docList.ItemRenamed += DocumentRename;
             _editor = container.Editor;
             Add(container);
 
@@ -107,6 +108,22 @@ namespace Norka
             if (docId == null) return;
 
             _editor.LoadDocument(docId.GetValueOrDefault());
+            // _editor.GrabFocus();
+        }
+
+        void DocumentRename(object sender, EventArgs args)
+        {
+            var doc = _editor.Document;
+            var popover = new RenamePopover(_docList.SelectedRow, doc.Title);
+            popover.RenameClicked += (sender, args) =>
+            {
+                doc.Title = (sender as Entry).Text;
+                storage.UpdateDocument(doc);
+
+                _docList.RefreshItems();
+                popover.Popdown();
+            };
+            popover.Popup();
         }
     }
 }

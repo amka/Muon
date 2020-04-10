@@ -9,12 +9,18 @@ namespace Norka.Widgets
 
         public DocumentListRow(string title)
         {
-            var label = new Label();
-            label.Markup = $"<b>{title}</b>";
-            label.Vexpand = true;
-            label.Valign = Align.Center;
+            var label = new Label(title)
+            {
+                Vexpand = true,
+                Valign = Align.Center,
+                Ellipsize = Pango.EllipsizeMode.End,
+                TooltipText = title,
+            };
 
-            Margin = 6;
+            MarginStart = 6;
+            MarginEnd = 6;
+            MarginBottom = 4;
+            MarginTop = 4;
             Add(label);
         }
     }

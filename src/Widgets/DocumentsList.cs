@@ -19,7 +19,6 @@ namespace Norka.Widgets
             storage = GlobalDI.GetService<IDocumentsStorage>();
             storage.DocumentAdded += (sender, args) => RefreshItems();
             storage.DocumentRemoved += (sender, args) => RefreshItems();
-
         }
 
         public int? SelectedDocumentId()
@@ -70,7 +69,6 @@ namespace Norka.Widgets
 
             if (evnt.Type == Gdk.EventType.ButtonPress && evnt.Button == 3)
             {
-
                 var menuDocumentRemove = new Button("Remove document");
                 menuDocumentRemove.ActionName = "document.remove";
 

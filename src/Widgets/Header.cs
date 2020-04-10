@@ -20,7 +20,7 @@ namespace Norka.Widgets
             Subtitle = "";
             HasSubtitle = Subtitle.Length > 0;
             ShowCloseButton = true;
-            StyleContext.AddClass("default-decoration");
+            //StyleContext.AddClass("default-decoration");
 
             var searchButton = new ToggleButton();
             searchButton.Image = Image.NewFromIconName("edit-find", IconSize.LargeToolbar);

@@ -68,6 +68,10 @@ namespace Norka.Widgets
             View.PackEnd(scrolled, true, true, 0);
         }
 
+        public void GrabFocus(){
+            EditorView.GrabFocus();
+        }
+
         public void ToggleFormatBar()
         {
             FormatRevealer.RevealChild = !FormatRevealer.RevealChild;
