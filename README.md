@@ -1,5 +1,15 @@
 # Norka
 
+## Preface
+
+While I'm not the UX-man and it's just a hobby, I try to create visually appealing applications. And Norka is one of my trials to create a cozy text editor for GNOME and Elementary OS exactly. 
+
+No markdown, no files, your data always saved and can be exported in required formats.
+
+![Norka](data/images/app_screenshot.png)
+
+## Tech part
+
 Text editor built for GNOME on top of [GtkSharp](https://github.com/GtkSharp/GtkSharp), .NET Core and GTK3. Project under development so it's not production ready yet and will be massively changing in time :)
 
 Application developed with [.net core 3.1](https://dot.net) the only requirement you need to run it.
