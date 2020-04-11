@@ -13,6 +13,7 @@ namespace Norka
             {"document.remove", "<Shift><Del>"},
             {"document.save", "<Control>s"},
             {"document.save-as", "<Control><Shift>s"},
+            {"document.search", "<Control>k"},
             {"format.bold", "<Control>b"},
             {"format.italic", "<Control>i"},
             {"format.underline", "<Control>u"},

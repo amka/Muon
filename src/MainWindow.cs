@@ -76,6 +76,10 @@ namespace Norka
             actionDocumentRemove.Activated += (sender, args) => RemoveDocument();
             documentActions.AddAction(actionDocumentRemove);
 
+            var actionDocumentSearch = new GLib.SimpleAction("search", null);
+            actionDocumentSearch.Activated += (sender, args) => DocumentSearch();
+            documentActions.AddAction(actionDocumentSearch);
+
             InsertActionGroup("document", documentActions);
         }
 
@@ -124,6 +128,11 @@ namespace Norka
                 popover.Popdown();
             };
             popover.Popup();
+        }
+
+        void DocumentSearch() {
+            var dlg = new SearchDialog();
+            dlg.Run();
         }
     }
 }
