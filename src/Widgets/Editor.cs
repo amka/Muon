@@ -151,13 +151,10 @@ namespace Norka.Widgets
 
             var iter = TextBuffer.StartIter;
 
+            TextBuffer.Text = "";
             if (Document.Content != null)
             {
                 TextBuffer.Deserialize(TextBuffer, DeserializeFormat, ref iter, Document.Content, (ulong)Document.Content.LongLength);
-            }
-            else
-            {
-                TextBuffer.Text = "";
             }
         }
 
