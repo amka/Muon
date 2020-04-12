@@ -125,6 +125,28 @@ namespace Norka.Widgets
             }
         }
 
+        internal void SetJustify(string tagName)
+        {
+            var tag = Tags[tagName];
+            TextIter start, end;
+            var hasBounds = TextBuffer.GetSelectionBounds(out start, out end);
+
+            if (hasBounds)
+            {
+                start.StartsSentence();
+                end.ForwardSentenceEnd();
+
+                // No clever way to remove only justification tags instead of `.RemoveAllTags()`
+                // then we have to remove one by one
+                TextBuffer.RemoveTag("justify-left", start, end);
+                TextBuffer.RemoveTag("justify-right", start, end);
+                TextBuffer.RemoveTag("justify-center", start, end);
+                TextBuffer.RemoveTag("justify-fill", start, end);
+
+                TextBuffer.ApplyTag(tag, start, end);
+            }
+        }
+
         internal void ClearTags()
         {
             TextIter start, end;

@@ -22,6 +22,9 @@ namespace Norka
             {"justify.right", "<Control>i"},
             {"justify.center", "<Control>u"},
             {"justify.fill", "<Control>u"},
+            {"font.size-up", "<Control>plus"},
+            {"font.size-down", "<Control>minus"},
+            {"font.size-reset", "<Control>0"},
         };
 
         public static SimpleAction ActionFromGroup(string actionName, SimpleActionGroup actionGroup)

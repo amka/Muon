@@ -36,19 +36,19 @@ namespace Norka.Widgets
             // Justify Bar
             var justifyLeftButton = new Button();
             justifyLeftButton.Image = Image.NewFromIconName("format-justify-left-symbolic", IconSize.SmallToolbar);
-            justifyLeftButton.ActionName = "justify.left";
+            justifyLeftButton.ActionName = "format.justify-left";
 
             var justifyRightButton = new Button();
             justifyRightButton.Image = Image.NewFromIconName("format-justify-right-symbolic", IconSize.SmallToolbar);
-            justifyRightButton.ActionName = "justify.right";
+            justifyRightButton.ActionName = "format.justify-right";
 
             var justifyCenterButton = new Button();
             justifyCenterButton.Image = Image.NewFromIconName("format-justify-center-symbolic", IconSize.SmallToolbar);
-            justifyCenterButton.ActionName = "justify.center";
+            justifyCenterButton.ActionName = "format.justify-center";
 
             var justifyFillButton = new Button();
             justifyFillButton.Image = Image.NewFromIconName("format-justify-fill-symbolic", IconSize.SmallToolbar);
-            justifyFillButton.ActionName = "justify.fill";
+            justifyFillButton.ActionName = "format.justify-fill";
 
             var justifyGrid = new Grid();
             justifyGrid.StyleContext.AddClass("linked");

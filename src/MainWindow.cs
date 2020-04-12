@@ -51,10 +51,39 @@ namespace Norka
             // Format Actions
             var formatActions = new GLib.SimpleActionGroup();
 
+            // Text styling
             var actionBold = new GLib.SimpleAction("bold", null);
             actionBold.Activated += (sender, args) => _editor.ToggleTag("bold");
             formatActions.AddAction(actionBold);
 
+            var actionItalic = new GLib.SimpleAction("italic", null);
+            actionItalic.Activated += (sender, args) => _editor.ToggleTag("italic");
+            formatActions.AddAction(actionItalic);
+
+            var actionUnderline = new GLib.SimpleAction("underline", null);
+            actionUnderline.Activated += (sender, args) => _editor.ToggleTag("underline");
+            formatActions.AddAction(actionUnderline);
+
+            // Paragraph justifying
+            var actionJustifyLeft = new GLib.SimpleAction("justify-left", null);
+            actionJustifyLeft.Activated += (sender, args) => _editor.SetJustify("justify-left");
+            formatActions.AddAction(actionJustifyLeft);
+
+            var actionJustifyCenter = new GLib.SimpleAction("justify-center", null);
+            actionJustifyCenter.Activated += (sender, args) => _editor.SetJustify("justify-center");
+            formatActions.AddAction(actionJustifyCenter);
+
+            var actionJustifyRight = new GLib.SimpleAction("justify-right", null);
+            actionJustifyRight.Activated += (sender, args) => _editor.SetJustify("justify-right");
+            formatActions.AddAction(actionJustifyRight);
+
+            var actionJustifyFill = new GLib.SimpleAction("justify-fill", null);
+            actionJustifyFill.Activated += (sender, args) => _editor.SetJustify("justify-fill");
+            formatActions.AddAction(actionJustifyFill);
+
+            // Font size
+
+            // Clear styling
             var actionFormatClear = new GLib.SimpleAction("clear", null);
             actionFormatClear.Activated += (sender, args) => _editor.ClearTags();
             formatActions.AddAction(actionFormatClear);
