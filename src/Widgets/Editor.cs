@@ -5,6 +5,7 @@ using Gtk;
 using Norka.Models;
 using Norka.Services;
 using AutoDI;
+using Gdk;
 
 namespace Norka.Widgets
 {
@@ -12,8 +13,10 @@ namespace Norka.Widgets
     {
         readonly IDocumentsStorage storage;
 
-        Window Parent;
+        Gtk.Window Parent;
         TextBuffer TextBuffer;
+        private Atom SerializeFormat;
+        private Atom DeserializeFormat;
         EditorView EditorView;
         FormatBar FormatBar;
         Revealer FormatRevealer;
@@ -34,7 +37,7 @@ namespace Norka.Widgets
             {"justify-fill", new TextTag("justify-fill"){Justification=Justification.Fill}},
         };
 
-        public Editor(Window parent)
+        public Editor(Gtk.Window parent)
         {
             Parent = parent;
             View = new Box(Orientation.Vertical, 0);
@@ -61,6 +64,8 @@ namespace Norka.Widgets
                 tagTable.Add(tag.Value);
             }
             TextBuffer = new TextBuffer(tagTable);
+            SerializeFormat = TextBuffer.RegisterSerializeTagset("text/markdown");
+            DeserializeFormat = TextBuffer.RegisterDeserializeTagset("text/markdown");
             EditorView = new EditorView(TextBuffer);
             scrolled.Add(EditorView);
 
@@ -68,7 +73,8 @@ namespace Norka.Widgets
             View.PackEnd(scrolled, true, true, 0);
         }
 
-        public void GrabFocus(){
+        public void GrabFocus()
+        {
             EditorView.GrabFocus();
         }
 
@@ -136,11 +142,28 @@ namespace Norka.Widgets
         {
             if (Document != null)
             {
-                Document.Content = TextBuffer.Text;
+                // Document.Content = TextBuffer.Text;
+                var bytes = TextBuffer.Serialize(TextBuffer, SerializeFormat, TextBuffer.StartIter, TextBuffer.EndIter);
+                Document.Content = bytes;
                 storage.UpdateDocument(Document);
             }
             Document = storage.DocumentById(docId);
-            TextBuffer.Text = Document.Content ?? "";
+
+            var iter = TextBuffer.StartIter;
+
+            if (Document.Content != null)
+            {
+                TextBuffer.Deserialize(TextBuffer, DeserializeFormat, ref iter, Document.Content, (ulong)Document.Content.LongLength);
+            }
+            else
+            {
+                TextBuffer.Text = "";
+            }
+        }
+
+        bool DeserializeRtf(TextBuffer register_buffer, TextBuffer content_buffer, TextIter iter, byte[] data, ulong length, bool create_tags)
+        {
+            return true;
         }
     }
 }
