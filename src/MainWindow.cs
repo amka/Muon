@@ -97,6 +97,14 @@ namespace Norka
             // Document Actions
             var documentActions = new GLib.SimpleActionGroup();
 
+            var actionDocumentUndo = new GLib.SimpleAction("undo", null);
+            actionDocumentUndo.Activated += (sender, args) => _editor.Undo();
+            documentActions.AddAction(actionDocumentUndo);
+
+            var actionDocumentRedo = new GLib.SimpleAction("redo", null);
+            actionDocumentRedo.Activated += (sender, args) => _editor.Redo();
+            documentActions.AddAction(actionDocumentRedo);
+
             var actionDocumentOpen = new GLib.SimpleAction("create", null);
             actionDocumentOpen.Activated += (sender, args) => CreateDocument();
             documentActions.AddAction(actionDocumentOpen);

@@ -12,6 +12,7 @@ namespace Norka.Widgets
     public class Editor
     {
         readonly IDocumentsStorage storage;
+        readonly ITextHistory history;
 
         Gtk.Window Parent;
         TextBuffer TextBuffer;
@@ -44,6 +45,7 @@ namespace Norka.Widgets
 
             // Load services
             storage = GlobalDI.GetService<IDocumentsStorage>();
+            history = GlobalDI.GetService<ITextHistory>();
 
             // Init widgets
             var scrolled = new ScrolledWindow()
@@ -125,6 +127,16 @@ namespace Norka.Widgets
             }
         }
 
+        internal void Redo()
+        {
+            Console.WriteLine("Redo");
+        }
+
+        internal void Undo()
+        {
+            Console.WriteLine("Undo");
+        }
+
         internal void SetJustify(string tagName)
         {
             var tag = Tags[tagName];
@@ -144,6 +156,8 @@ namespace Norka.Widgets
                 TextBuffer.RemoveTag("justify-fill", start, end);
 
                 TextBuffer.ApplyTag(tag, start, end);
+
+                history.Push(new TextAction($"format.justify-{tagName}", start, end));
             }
         }
 
